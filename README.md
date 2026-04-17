@@ -36,7 +36,23 @@ A modern mobile habit tracking application built using **.NET MAUI** to help use
 3. Click Run ▶️
 
 
-## 📸 Screenshots
+## ## 📸 Screenshots
+
+### 🏠 Home Screen
+
+![Home](screenshots/home.png)
+
+### 📊 Habit History
+
+![History](screenshots/history.png)
+
+### ➕ Add / Edit Habit
+
+![Add Habit](screenshots/add_edit.png)
+
+### 📈 Progress Details
+
+![Progress](screenshots/progress.png)
 
 
 
