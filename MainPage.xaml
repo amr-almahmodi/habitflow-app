@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HabitFlow.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- 🔹 Top Green Bar -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#2E7D32"
+              Padding="10,25,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Back icon image -->
+            <Image Grid.Column="0"
+       Source="back.png"
+       WidthRequest="25"
+       HeightRequest="25"
+       VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+
+            <!-- Title -->
+            <Label Grid.Column="1"
+                   Text="HabitFlow"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center" />
+
+            <!-- About icon image -->
+            <Image Grid.Column="2"
+       Source="about.png"
+       WidthRequest="25"
+       HeightRequest="25"
+       VerticalOptions="Center"
+       HorizontalOptions="End">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAboutTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+        </Grid>
+
+        <!-- 🔹 Main Scroll Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- CURRENT HABIT -->
+                <Label Text="Current Habit"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#333333" />
+
+                <Frame x:Name="CurrentHabitCard"
+                       CornerRadius="10"
+                       HasShadow="True"
+                       BackgroundColor="White"
+                       Padding="12"
+                       Margin="0,4,0,0"
+                       IsVisible="False">
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto,Auto,Auto"
+                          ColumnSpacing="10">
+
+                        <!-- Habit name -->
+                        <Label x:Name="CurrentHabitNameLabel"
+                               Grid.Row="0" Grid.Column="0"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#000000" />
+
+                        <!-- Days line -->
+                        <Label x:Name="CurrentHabitDaysLabel"
+                               Grid.Row="1" Grid.Column="0"
+                               FontSize="14"
+                               TextColor="#666666" />
+
+                        <!-- Time + date text (Today / Tomorrow / dd/MM/yyyy) -->
+                        <Label x:Name="CurrentHabitTimeLabel"
+                               Grid.Row="2" Grid.Column="0"
+                               FontSize="14"
+                               TextColor="#666666" />
+
+                        <!-- Icon (set from code-behind) -->
+                        <Image x:Name="CurrentHabitIcon"
+                               Grid.Row="0"
+                               Grid.RowSpan="3"
+                               Grid.Column="1"
+                               WidthRequest="60"
+                               HeightRequest="60"
+                               Aspect="AspectFit"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center" />
+
+                        <!-- Buttons -->
+                        <HorizontalStackLayout Grid.Row="3"
+                                               Grid.ColumnSpan="2"
+                                               Spacing="10"
+                                               Margin="0,10,0,0">
+                            <Button x:Name="CurrentHabitDoneButton"
+                                    Text="Done"
+                                    BackgroundColor="#4CAF50"
+                                    TextColor="White"
+                                    CornerRadius="5"
+                                    HorizontalOptions="FillAndExpand"
+                                    Clicked="OnCurrentDoneClicked" />
+
+                            <Button x:Name="CurrentHabitSkipButton"
+                                    Text="Skip"
+                                    BackgroundColor="#F44336"
+                                    TextColor="White"
+                                    CornerRadius="5"
+                                    HorizontalOptions="FillAndExpand"
+                                    Clicked="OnCurrentSkipClicked" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- UPCOMING HABITS -->
+                <Label Text="Upcoming Habit"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#333333"
+                       Margin="0,16,0,0" />
+
+                <CollectionView x:Name="UpcomingHabitsView"
+                                SelectionMode="None"
+                                Margin="0,4,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10"
+                                   HasShadow="True"
+                                   BackgroundColor="White"
+                                   Padding="12"
+                                   Margin="0,8,0,0">
+                                <Grid ColumnDefinitions="*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto,Auto"
+                                      ColumnSpacing="10">
+
+                                    <!-- Habit name -->
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding Habit.Name}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="#000000" />
+
+                                    <!-- Days line -->
+                                    <Label Grid.Row="1" Grid.Column="0"
+                                           Text="{Binding Habit.DaysOfWeek, StringFormat='Days: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#666666" />
+
+                                    <!-- Time + date text (computed in code) -->
+                                    <Label Grid.Row="2" Grid.Column="0"
+                                           Text="{Binding WhenText}"
+                                           FontSize="14"
+                                           TextColor="#666666" />
+
+                                    <!-- Right icon -->
+                                    <Image Grid.Row="0"
+                                           Grid.RowSpan="3"
+                                           Grid.Column="1"
+                                           Source="{Binding IconSource}"
+                                           WidthRequest="60"
+                                           HeightRequest="60"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Center" />
+
+                                    <!-- Done / Skip -->
+                                    <HorizontalStackLayout Grid.Row="3"
+                                                           Grid.ColumnSpan="2"
+                                                           Spacing="10"
+                                                           Margin="0,10,0,0">
+                                        <Button Text="Done"
+                                                BackgroundColor="#4CAF50"
+                                                TextColor="White"
+                                                CornerRadius="5"
+                                                HorizontalOptions="FillAndExpand"
+                                                Clicked="OnUpcomingDoneClicked"
+                                                CommandParameter="{Binding Habit}" />
+
+                                        <Button Text="Skip"
+                                                BackgroundColor="#F44336"
+                                                TextColor="White"
+                                                CornerRadius="5"
+                                                HorizontalOptions="FillAndExpand"
+                                                Clicked="OnUpcomingSkipClicked"
+                                                CommandParameter="{Binding Habit}" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- ALL HABITS LIST -->
+                <Label Text="All Habits"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#333333"
+                       Margin="0,16,0,0" />
+
+                <CollectionView x:Name="AllHabitsView"
+                                SelectionMode="None"
+                                Margin="0,4,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10"
+                                   HasShadow="True"
+                                   BackgroundColor="White"
+                                   Padding="12"
+                                   Margin="0,8,0,0">
+                                <Grid ColumnDefinitions="*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto"
+                                      ColumnSpacing="10">
+
+                                    <!-- Habit name -->
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding Habit.Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#000000" />
+
+                                    <!-- Days -->
+                                    <Label Grid.Row="1" Grid.Column="0"
+                                           Text="{Binding Habit.DaysOfWeek, StringFormat='Days: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#666666" />
+
+                                    <!-- Time + date text -->
+                                    <Label Grid.Row="2" Grid.Column="0"
+                                           Text="{Binding WhenText}"
+                                           FontSize="14"
+                                           TextColor="#666666" />
+
+                                    <!-- Icon -->
+                                    <Image Grid.Row="0"
+                                           Grid.RowSpan="3"
+                                           Grid.Column="1"
+                                           Source="{Binding IconSource}"
+                                           WidthRequest="50"
+                                           HeightRequest="50"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- CURRENT PROGRESS (just keep as before) -->
+                <Label Text="Current Progress"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#333333"
+                       Margin="0,16,0,0" />
+
+                <Label Text="For The Week"
+                       FontSize="14"
+                       TextColor="#666666" />
+
+                <ProgressBar Progress="0.4"
+                             HeightRequest="12"
+                             Margin="0,8,0,0"
+                             ProgressColor="#4CAF50"
+                             BackgroundColor="#D3D3D3" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- 🔹 Bottom Navigation Bar -->
+        <Grid Grid.Row="2"
+              BackgroundColor="White"
+              Padding="0,10"
+              ColumnDefinitions="*,*">
+            <!-- Home -->
+            <Label Grid.Column="0"
+                   Text="&#x2302;"
+                   FontSize="34"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="#2E7D32">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <!-- Menu -->
+            <Label Grid.Column="1"
+                   Text="&#x2630;"
+                   FontSize="34"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="#000000">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+    </Grid>
+</ContentPage>

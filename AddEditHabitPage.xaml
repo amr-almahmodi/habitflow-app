@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HabitFlow.AddEditHabitPage"
+             BackgroundColor="#F5F5F5"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- 🔹 Top Green Bar -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#2E7D32"
+              Padding="10,25,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- Back icon image -->
+            <Image Grid.Column="0"
+       Source="back.png"
+       WidthRequest="25"
+       HeightRequest="25"
+       VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+
+            <!-- Title -->
+            <Label Grid.Column="1"
+                   Text="Add / Edit Habits"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center" />
+            <!-- About icon image -->
+            <Image Grid.Column="2"
+       Source="about.png"
+       WidthRequest="25"
+       HeightRequest="25"
+       VerticalOptions="Center"
+       HorizontalOptions="End">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAboutTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+        </Grid>
+
+        <!-- 🔹 Main Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="14">
+
+                <!-- Habit Name -->
+                <Label Text="Habit Name"
+                       FontSize="14"
+                       TextColor="#333" />
+                <Frame CornerRadius="8"
+                       BorderColor="#2E7D32"
+                       Padding="8">
+                    <Entry x:Name="HabitNameEntry"
+                           Placeholder="e.g. Football"
+                           FontSize="14" />
+                </Frame>
+
+                <!-- Start Time -->
+                <Label Text="Start Time"
+       FontSize="14"
+       TextColor="#333"
+       Margin="0,10,0,2" />
+                <TimePicker x:Name="StartTimePicker"
+            Time="16:00:00"
+            Format="h:mm tt"
+            Margin="0,0,0,8"
+            TextColor="#2E7D32" />
+
+                <!-- Finish Time -->
+                <Label Text="Finish Time"
+       FontSize="14"
+       TextColor="#333"
+       Margin="0,4,0,2" />
+                <TimePicker x:Name="FinishTimePicker"
+            Time="17:00:00"
+            Format="h:mm tt"
+            Margin="0,0,0,8"
+            TextColor="#2E7D32" />
+
+
+                <!-- 🔹 Weekly Days (instead of Date) -->
+                <Label Text="Repeat on these days"
+                       FontSize="14"
+                       TextColor="#333"
+                       Margin="0,4,0,0" />
+                <Frame CornerRadius="8"
+                       BorderColor="#2E7D32"
+                       Padding="8">
+                    <VerticalStackLayout Spacing="4">
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="MonCheck" />
+                            <Label Text="Monday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="TueCheck" />
+                            <Label Text="Tuesday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="WedCheck" />
+                            <Label Text="Wednesday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="ThuCheck" />
+                            <Label Text="Thursday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="FriCheck" />
+                            <Label Text="Friday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="SatCheck" />
+                            <Label Text="Saturday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox x:Name="SunCheck" />
+                            <Label Text="Sunday" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Save / Cancel buttons -->
+                <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                    <Button Text="Save"
+                            BackgroundColor="#4CAF50"
+                            TextColor="White"
+                            Clicked="OnSaveClicked" />
+                    <Button Text="Cancel"
+                            BackgroundColor="#DDDDDD"
+                            TextColor="#555"
+                            Clicked="OnCancelClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- 🔹 Bottom Navigation -->
+        <Grid Grid.Row="2"
+              BackgroundColor="White"
+              Padding="0,10"
+              ColumnDefinitions="*,*">
+
+            <!-- Home -->
+            <Label Grid.Column="0"
+                   Text="&#x2302;"
+                   FontSize="34"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   TextColor="#000000">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <!-- Menu -->
+            <Label Grid.Column="1"
+                   Text="&#x2630;"
+                   FontSize="34"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   TextColor="#000000">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+    </Grid>
+</ContentPage>
