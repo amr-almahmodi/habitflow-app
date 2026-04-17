@@ -2,15 +2,17 @@
 
 A modern mobile habit tracking application built using **.NET MAUI** to help users build and maintain daily routines.
 
+---
 
 ## 📱 Features
 
 * ✅ Add and manage daily habits
-* 📊 Track progress over time
-* 📈 Visual progress details
+* 📊 Track habit completion
+* 📈 View progress details (weekly & monthly)
 * 🗂 Habit categories (gym, reading, etc.)
-* 🔔 Simple and clean UI for daily use
+* 🔔 Simple and user-friendly UI
 
+---
 
 ## 🛠️ Technologies Used
 
@@ -19,24 +21,17 @@ A modern mobile habit tracking application built using **.NET MAUI** to help use
 * XAML
 * SQLite (local database)
 
-
-## 📂 Project Structure
-
-* `Models/` → Data models
-* `Data/` → Database logic
-* `Pages/` → UI screens
-* `Resources/` → Images, icons, styles
-* `Platforms/` → Android, iOS configurations
-
+---
 
 ## 🚀 How to Run
 
-1. Open the project in Visual Studio 2022
-2. Select Android Emulator / Windows Machine
-3. Click Run ▶️
+1. Open the project in **Visual Studio 2022**
+2. Select **Android Emulator / Windows Machine**
+3. Click **Run ▶️**
 
+---
 
-## ## 📸 Screenshots
+## 📸 Screenshots
 
 ### 🏠 Home Screen
 
@@ -54,13 +49,24 @@ A modern mobile habit tracking application built using **.NET MAUI** to help use
 
 ![Progress](screenshots/progress.png)
 
+---
 
+## 📂 Project Structure
+
+* `Models/` → Data models
+* `Data/` → Database logic
+* `Resources/` → Images, fonts, styles
+* `Platforms/` → Android, iOS configurations
+* `.xaml pages` → UI screens
+
+---
 
 ## 👨‍💻 Author
 
 **Amr Almahmodi**
 Software Engineering Student @ UNITEN
 
+---
 
 ## ⭐ Notes
 
